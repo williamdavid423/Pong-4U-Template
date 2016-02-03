@@ -58,8 +58,11 @@ namespace Pong
         //game winning score
         int gameWinScore = 2;
 
+        //brush for paint method
+        SolidBrush drawBrush = new SolidBrush(Color.White);
+
         #endregion
-       
+
         public Form1()
         {
             InitializeComponent();
@@ -289,8 +292,6 @@ namespace Pong
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            SolidBrush drawBrush = new SolidBrush(Color.White);
-
             // TODO draw paddles using FillRectangle
 
 
