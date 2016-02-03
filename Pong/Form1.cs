@@ -289,14 +289,10 @@ namespace Pong
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            //double buffering used to produce flicker free animation
-            this.DoubleBuffered = true;
-
-            //create graphic objects
-            Graphics formGraphics = e.Graphics;
             SolidBrush drawBrush = new SolidBrush(Color.White);
 
             // TODO draw paddles using FillRectangle
+
 
             // TODO draw ball using FillRectangle
 
