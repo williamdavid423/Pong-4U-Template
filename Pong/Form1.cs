@@ -26,7 +26,8 @@ namespace Pong
         #region global values
 
         //paddle position variables
-        int paddle1Y, paddle2Y;
+        int paddle1X, paddle1Y;
+        int paddle2X, paddle2Y;
 
         //ball position variables
         int ballX, ballY;
@@ -142,20 +143,9 @@ namespace Pong
             newGameOk = true;
             SetParameters();
 
-            // TODO create code to make a graphics object, a brush, and a font to display the countdown
-
             startLabel.Visible = false;
-            Refresh();
-            
-            //countdown to start of game
-            for (; ; ) // TODO create conditions for a for loop that counts down from 3 
-            {
-                // --- create code using DrawString to display the countdown in the appropriate area.  
-                // --- sleep for 1 second
-                // --- refresh the screen
-            }
-            
-            // TODO start the gameUpdateLoop timer
+
+            gameUpdateLoop.Start();
             newGameOk = false;
         }
 
@@ -166,17 +156,15 @@ namespace Pong
         {
             if (newGameOk)
             {
-                // sets location of score labels to the middle of the screen
-                player1Label.Location = new Point(this.Width / 2 - player1Label.Size.Width - 10, player1Label.Location.Y);
-                player2Label.Location = new Point(this.Width / 2 + 10, player2Label.Location.Y);
-
-                //set label, score variables, and ball position
+                //set score variables to 0
                 player1Score = player2Score = 0;
-                player1Label.Text = "Player 1:  " + player1Score;
-                player2Label.Text = "Player 2:  " + player2Score;
 
+                // set both paddle y positions to middle of screen
                 paddle1Y = paddle2Y = this.Height / 2 - PADDLE_LENGTH / 2;
 
+                // set x locations for both paddles
+                paddle1X = PADDLE_EDGE;
+                paddle2X = this.Width - PADDLE_EDGE - PADDLE_WIDTH;
             }
 
             // TODO set starting X position for ball to middle of screen, (use this.Width and BALL_SIZE)
@@ -231,16 +219,18 @@ namespace Pong
 
             #region ball collision with paddles
 
-            if (ballY > paddle1Y && ballY < paddle1Y + PADDLE_LENGTH && ballX < PADDLE_EDGE + PADDLE_WIDTH) // left paddle collision
-            {
-                // TODO play a "paddle hit" sound 
-                // TODO use ballMoveRight boolean to change direction
-            }
-            else if (ballY > paddle2Y && ballY < paddle2Y + PADDLE_LENGTH && ballX + BALL_SIZE > this.Width - PADDLE_EDGE - PADDLE_WIDTH / 2) // right paddle collision
-            {
-                // TODO play a "paddle hit" sound 
-                // TODO use ballMoveRight boolean to change direction
-            }
+            // TODO create a rectangle object set to the position and size of the ball
+            // TODO create a rectangle object set to the position and size of paddle 1
+            // TODO create a rectangle object set to the position and size of paddle 1
+
+            // TODO create if statment that checks left paddle collision with ball and if it does
+            // play a "paddle hit" sound and
+            // use ballMoveRight boolean to change direction
+
+            // TODO create if statment that checks left paddle collision with ball
+            // play a "paddle hit" sound and
+            // use ballMoveRight boolean to change direction
+            
 
             #endregion
 
@@ -252,8 +242,6 @@ namespace Pong
             {
                 // --- play score sound
                 // --- update player 2 score
-                // --- update player2Label with new score
-                // --- refresh
 
                 // --- use if statement to check to see if player 2 has won the game. If true run 
                 // gameWinScore method. Else call SetParameters method to reset ball position.
@@ -294,9 +282,9 @@ namespace Pong
         {
             // TODO draw paddles using FillRectangle
 
-
             // TODO draw ball using FillRectangle
 
+            // TODO draw scores to the screen using DrawString
         }
 
     }

@@ -31,9 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.gameUpdateLoop = new System.Windows.Forms.Timer(this.components);
             this.startLabel = new System.Windows.Forms.Label();
-            this.closeButton = new System.Windows.Forms.Button();
-            this.player1Label = new System.Windows.Forms.Label();
-            this.player2Label = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // gameUpdateLoop
@@ -56,55 +53,12 @@
             this.startLabel.Text = "Press Space To Start";
             this.startLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // closeButton
-            // 
-            this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.closeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.closeButton.ForeColor = System.Drawing.Color.White;
-            this.closeButton.Location = new System.Drawing.Point(892, -2);
-            this.closeButton.Margin = new System.Windows.Forms.Padding(0);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(32, 37);
-            this.closeButton.TabIndex = 1;
-            this.closeButton.TabStop = false;
-            this.closeButton.Text = "x";
-            this.closeButton.UseVisualStyleBackColor = true;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
-            // 
-            // player1Label
-            // 
-            this.player1Label.AutoSize = true;
-            this.player1Label.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.player1Label.ForeColor = System.Drawing.Color.White;
-            this.player1Label.Location = new System.Drawing.Point(42, 3);
-            this.player1Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.player1Label.Name = "player1Label";
-            this.player1Label.Size = new System.Drawing.Size(180, 27);
-            this.player1Label.TabIndex = 2;
-            this.player1Label.Text = "Player 1:  0";
-            // 
-            // player2Label
-            // 
-            this.player2Label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.player2Label.AutoSize = true;
-            this.player2Label.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.player2Label.ForeColor = System.Drawing.Color.White;
-            this.player2Label.Location = new System.Drawing.Point(645, 3);
-            this.player2Label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.player2Label.Name = "player2Label";
-            this.player2Label.Size = new System.Drawing.Size(180, 27);
-            this.player2Label.TabIndex = 3;
-            this.player2Label.Text = "Player 2:  0";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(924, 692);
-            this.Controls.Add(this.player2Label);
-            this.Controls.Add(this.player1Label);
-            this.Controls.Add(this.closeButton);
             this.Controls.Add(this.startLabel);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -116,7 +70,6 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -124,9 +77,6 @@
 
         private System.Windows.Forms.Timer gameUpdateLoop;
         private System.Windows.Forms.Label startLabel;
-        private System.Windows.Forms.Button closeButton;
-        private System.Windows.Forms.Label player1Label;
-        private System.Windows.Forms.Label player2Label;
     }
 }
 
