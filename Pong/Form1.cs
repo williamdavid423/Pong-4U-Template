@@ -25,49 +25,40 @@ namespace Pong
     {
         #region global values
 
-        //paddle position variables
-        int paddle1X, paddle1Y;
-        int paddle2X, paddle2Y;
+        //graphics objects for drawing
+        SolidBrush drawBrush = new SolidBrush(Color.White);
+        Font drawFont = new Font("Courier New", 10);
 
-        //ball position variables
-        int ballX, ballY;
-
-        // check to see if a new game can be started
-        Boolean newGameOk = true;
-
-        //ball directions
-        Boolean ballMoveRight = false;
-        Boolean ballMoveDown = false;
-
-        //constants used to set size and speed of paddles 
-        const int PADDLE_LENGTH = 40;
-        const int PADDLE_WIDTH = 10;
-        const int PADDLE_EDGE = 20;  // buffer distance between screen edge and paddle
-        const int PADDLE_SPEED = 4;
-
-        //constants used to set size and speed of ball 
-        const int BALL_SIZE = 10;
-        const int BALL_SPEED = 4;
-
-        //player scores
-        int player1Score = 0;
-        int player2Score = 0;
+        // Sounds for game
+        SoundPlayer scoreSound = new SoundPlayer(Properties.Resources.score);
+        SoundPlayer collisionSound = new SoundPlayer(Properties.Resources.collision);
 
         //determines whether a key is being pressed or not
         Boolean aKeyDown, zKeyDown, jKeyDown, mKeyDown;
 
-        //game winning score
-        int gameWinScore = 2;
+        // check to see if a new game can be started
+        Boolean newGameOk = true;
 
-        //brush for paint method
-        SolidBrush drawBrush = new SolidBrush(Color.White);
+        //ball directions, speed, and rectangle
+        Boolean ballMoveRight = true;
+        Boolean ballMoveDown = true;
+        const int BALL_SPEED = 4;
+        Rectangle ball;
+
+        //paddle speeds and rectangles
+        const int PADDLE_SPEED = 4;
+        Rectangle p1, p2;
+
+        //player and game scores
+        int player1Score = 0;
+        int player2Score = 0;
+        int gameWinScore = 2;  // number of points needed to win game
 
         #endregion
 
         public Form1()
         {
             InitializeComponent();
-            SetParameters();        
         }
 
         // -- YOU DO NOT NEED TO MAKE CHANGES TO THIS METHOD
@@ -89,9 +80,10 @@ namespace Pong
                     mKeyDown = true;
                     break;
                 case Keys.Y:
+                case Keys.Space:
                     if (newGameOk)
                     {
-                        GameStart();
+                        SetParameters();
                     }
                     break;
                 case Keys.N:
@@ -99,14 +91,6 @@ namespace Pong
                     {
                         Close();
                     }
-                    break;
-                case Keys.Space:
-                    if (newGameOk)
-                    {
-                        GameStart();
-                    }
-                    break;
-                default:
                     break;
             }
         }
@@ -129,24 +113,7 @@ namespace Pong
                 case Keys.M:
                     mKeyDown = false;
                     break;
-                default:
-                    break;
             }
-        }
-
-        /// <summary>
-        /// Sets up the game objects in their start position, resets the scores, displays a 
-        /// countdown, and then starts the game timer.
-        /// </summary>
-        private void GameStart()
-        {
-            newGameOk = true;
-            SetParameters();
-
-            startLabel.Visible = false;
-
-            gameUpdateLoop.Start();
-            newGameOk = false;
         }
 
         /// <summary>
@@ -156,19 +123,29 @@ namespace Pong
         {
             if (newGameOk)
             {
-                //set score variables to 0
                 player1Score = player2Score = 0;
-
-                // set both paddle y positions to middle of screen
-                paddle1Y = paddle2Y = this.Height / 2 - PADDLE_LENGTH / 2;
-
-                // set x locations for both paddles
-                paddle1X = PADDLE_EDGE;
-                paddle2X = this.Width - PADDLE_EDGE - PADDLE_WIDTH;
+                newGameOk = false;
+                startLabel.Visible = false;
+                gameUpdateLoop.Start();
             }
 
-            // TODO set starting X position for ball to middle of screen, (use this.Width and BALL_SIZE)
-            // TODO set starting Y position for ball to middle of screen, (use this.Height and BALL_SIZE)
+            //set starting position for paddles on new game and point scored 
+            const int PADDLE_EDGE = 20;  // buffer distance between screen edge and paddle            
+
+            p1.Width = p2.Width = 10;    //height for both paddles set the same
+            p1.Height = p2.Height = 40;  //width for both paddles set the same
+
+            //p1 starting position
+            p1.X = PADDLE_EDGE;
+            p1.Y = this.Height / 2 - p1.Height / 2;
+
+            //p2 starting position
+            p2.X = this.Width - PADDLE_EDGE - p2.Width;
+            p2.Y = this.Height / 2 - p2.Height / 2;
+
+            // TODO set Width and Height of ball
+            // TODO set starting X position for ball to middle of screen, (use this.Width and ball.Width)
+            // TODO set starting Y position for ball to middle of screen, (use this.Height and ball.Height)
 
         }
 
@@ -178,73 +155,68 @@ namespace Pong
         /// </summary>
         private void gameUpdateLoop_Tick(object sender, EventArgs e)
         {
-            //sound player to be used for all in game sounds initially set to collision sound
-            SoundPlayer player = new SoundPlayer();
-            player = new SoundPlayer(Properties.Resources.collision);
-
             #region update ball position
 
-            // TODO create code to move ball either left or right based on ballMoveRight and BALL_SPEED
+            // TODO create code to move ball either left or right based on ballMoveRight and using BALL_SPEED
 
-            // TODO create code move ball either down or up based on ballMoveDown and BALL_SPEED
+            // TODO create code move ball either down or up based on ballMoveDown and using BALL_SPEED
 
             #endregion
 
             #region update paddle positions
 
-            if (aKeyDown == true && paddle1Y > 0)
+            if (aKeyDown == true && p1.Y > 0)
             {
-                // TODO create code to move player 1 paddle up using paddle1Y and PADDLE_SPEED
+                // TODO create code to move player 1 paddle up using p1.Y and PADDLE_SPEED
             }
 
-            // TODO create an if statement and code to move player 1 paddle down using paddle1Y and PADDLE_SPEED
+            // TODO create an if statement and code to move player 1 paddle down using p1.Y and PADDLE_SPEED
 
-            // TODO create an if statement and code to move player 2 paddle up using paddle2Y and PADDLE_SPEED
+            // TODO create an if statement and code to move player 2 paddle up using p2.Y and PADDLE_SPEED
 
-            // TODO create an if statement and code to move player 2 paddle down using paddle2Y and PADDLE_SPEED
+            // TODO create an if statement and code to move player 2 paddle down using p2.Y and PADDLE_SPEED
 
             #endregion
 
             #region ball collision with top and bottom lines
 
-            if (ballY < 0) // if ball hits top line
+            if (ball.Y < 0) // if ball hits top line
             {
                 // TODO use ballMoveDown boolean to change direction
                 // TODO play a collision sound
             }
-            // TODO In an else if statement use ballY, this.Height, and BALL_SIZE to check for collision with bottom line
+            // TODO In an else if statement use ball.Y, this.Height, and ball.Width to check for collision with bottom line
             // If true use ballMoveDown down boolean to change direction
 
             #endregion
 
             #region ball collision with paddles
 
-            // TODO create a rectangle object set to the position and size of the ball
-            // TODO create a rectangle object set to the position and size of paddle 1
-            // TODO create a rectangle object set to the position and size of paddle 1
+            // TODO create if statment that checks p1 collides with ball and if it does
+                 // --- play a "paddle hit" sound and
+                 // --- use ballMoveRight boolean to change direction
 
-            // TODO create if statment that checks left paddle collision with ball and if it does
-            // play a "paddle hit" sound and
-            // use ballMoveRight boolean to change direction
-
-            // TODO create if statment that checks left paddle collision with ball
-            // play a "paddle hit" sound and
-            // use ballMoveRight boolean to change direction
+            // TODO create if statment that checks p2 collides with ball and if it does
+                // --- play a "paddle hit" sound and
+                // --- use ballMoveRight boolean to change direction
             
+            /*  ENRICHMENT
+             *  Instead of using two if statments as noted above see if you can create one
+             *  if statement with multiple conditions to play a sound and change direction
+             */
 
             #endregion
 
             #region ball collision with side walls (point scored)
 
-            player = new SoundPlayer(Properties.Resources.score);
-
-            if (ballX < 0)  // TODO ball hits left wall logic
+            if (ball.X < 0)  // ball hits left wall logic
             {
+                // TODO
                 // --- play score sound
                 // --- update player 2 score
 
-                // --- use if statement to check to see if player 2 has won the game. If true run 
-                // gameWinScore method. Else call SetParameters method to reset ball position.
+                // TODO use if statement to check to see if player 2 has won the game. If true run 
+                // GameOver method. Else change direction of ball and call SetParameters method.
 
             }
 
@@ -267,15 +239,10 @@ namespace Pong
 
             // TODO create game over logic
             // --- stop the gameUpdateLoop
-            // --- show a message on the startLabel to indicate a winner
+            // --- show a message on the startLabel to indicate a winner, (need to Refresh).
             // --- pause for two seconds 
             // --- use the startLabel to ask the user if they want to play again
 
-        }
-
-        private void closeButton_Click(object sender, EventArgs e)
-        {
-            Close();
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
