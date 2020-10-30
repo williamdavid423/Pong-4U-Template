@@ -43,11 +43,11 @@ namespace Pong
         Boolean ballMoveRight = true;
         Boolean ballMoveDown = true;
         const int BALL_SPEED = 4;
-        Rectangle ball;
+        int ballX, ballY, ballSize;
 
         //paddle speeds and rectangles
         const int PADDLE_SPEED = 4;
-        Rectangle p1, p2;
+        int p1X, p1Y, p2X, p2Y, pHeight, pWidth;
 
         //player and game scores
         int player1Score = 0;
@@ -132,16 +132,16 @@ namespace Pong
             //set starting position for paddles on new game and point scored 
             const int PADDLE_EDGE = 20;  // buffer distance between screen edge and paddle            
 
-            p1.Width = p2.Width = 10;    //height for both paddles set the same
-            p1.Height = p2.Height = 40;  //width for both paddles set the same
+            pWidth = 10;    //width for paddles
+            pHeight = 40;   //height for paddles
 
             //p1 starting position
-            p1.X = PADDLE_EDGE;
-            p1.Y = this.Height / 2 - p1.Height / 2;
+            p1X = PADDLE_EDGE;
+            p1Y = this.Height / 2 - pHeight / 2;
 
             //p2 starting position
-            p2.X = this.Width - PADDLE_EDGE - p2.Width;
-            p2.Y = this.Height / 2 - p2.Height / 2;
+            p2X = this.Width - PADDLE_EDGE - pWidth;
+            p2Y = this.Height / 2 - pHeight / 2;
 
             // TODO set Width and Height of ball
             // TODO set starting X position for ball to middle of screen, (use this.Width and ball.Width)
@@ -165,7 +165,7 @@ namespace Pong
 
             #region update paddle positions
 
-            if (aKeyDown == true && p1.Y > 0)
+            if (aKeyDown == true && p1Y > 0)
             {
                 // TODO create code to move player 1 paddle up using p1.Y and PADDLE_SPEED
             }
@@ -180,7 +180,7 @@ namespace Pong
 
             #region ball collision with top and bottom lines
 
-            if (ball.Y < 0) // if ball hits top line
+            if (ballY < 0) // if ball hits top line
             {
                 // TODO use ballMoveDown boolean to change direction
                 // TODO play a collision sound
@@ -209,7 +209,7 @@ namespace Pong
 
             #region ball collision with side walls (point scored)
 
-            if (ball.X < 0)  // ball hits left wall logic
+            if (ballX < 0)  // ball hits left wall logic
             {
                 // TODO
                 // --- play score sound
