@@ -147,6 +147,11 @@ namespace Pong
             // TODO set starting X position for ball to middle of screen, (use this.Width and ball.Width)
             // TODO set starting Y position for ball to middle of screen, (use this.Height and ball.Height)
 
+            int bWidth = 10;
+            int bHeight = 10;
+            int ballX = this.Width / 2 - bWidth;
+            int ballY = this.Height /2 - bHeight;
+        
         }
 
         /// <summary>
@@ -162,7 +167,7 @@ namespace Pong
             // TODO create code move ball either down or up based on ballMoveDown and using BALL_SPEED
 
             #endregion
-
+            
             #region update paddle positions
 
             if (aKeyDown == true && p1Y > 0)
@@ -248,10 +253,14 @@ namespace Pong
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             // TODO draw paddles using FillRectangle
+            SolidBrush bluePaddle = new SolidBrush(Color.Blue);
+            Rectangle paddle1 = new Rectangle(p1X, p1Y, pWidth, pHeight);
+            e.Graphics.FillRectangle(bluePaddle, paddle1);
 
             // TODO draw ball using FillRectangle
 
             // TODO draw scores to the screen using DrawString
+            Refresh(); 
         }
 
     }
