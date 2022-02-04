@@ -47,12 +47,14 @@ namespace Pong
 
         //paddle speeds and rectangles
         const int PADDLE_SPEED = 4;
-        int p1X, p1Y, p2X, p2Y, pHeight, pWidth;
+        int p1X, p1Y, p2X, p2Y, pHeight, pWidth, bWidth, bHeight; 
 
         //player and game scores
         int player1Score = 0;
         int player2Score = 0;
         int gameWinScore = 2;  // number of points needed to win game
+
+        
 
         #endregion
 
@@ -147,10 +149,10 @@ namespace Pong
             // TODO set starting X position for ball to middle of screen, (use this.Width and ball.Width)
             // TODO set starting Y position for ball to middle of screen, (use this.Height and ball.Height)
 
-            int bWidth = 10;
-            int bHeight = 10;
-            int ballX = this.Width / 2 - bWidth;
-            int ballY = this.Height /2 - bHeight;
+            bWidth = 10;
+            bHeight = 10;
+            ballX = this.Width / 2 - bWidth;
+            ballY = this.Height /2 - bHeight;
         
         }
 
@@ -254,12 +256,27 @@ namespace Pong
         {
             // TODO draw paddles using FillRectangle
             SolidBrush bluePaddle = new SolidBrush(Color.Blue);
+            SolidBrush white = new SolidBrush(Color.White);
             Rectangle paddle1 = new Rectangle(p1X, p1Y, pWidth, pHeight);
+            Rectangle paddle2 = new Rectangle(p2X, p2Y, pWidth, pHeight);
+            Rectangle ball = new Rectangle(ballX, ballY, bWidth, bHeight);
             e.Graphics.FillRectangle(bluePaddle, paddle1);
+            e.Graphics.FillRectangle(bluePaddle, paddle2);
+            e.Graphics.FillRectangle(white, ball);
+
 
             // TODO draw ball using FillRectangle
 
             // TODO draw scores to the screen using DrawString
+            string drawstring1 = $"{player1Score}";
+            string drawstring2 = $"{player2Score}";
+            if (newGameOk == false)
+            {
+                e.Graphics.DrawString(drawstring1, drawFont, drawBrush, 205, 5);
+                e.Graphics.DrawString(drawstring2, drawFont, drawBrush, 410, 5);
+            }
+            
+
             Refresh(); 
         }
 
