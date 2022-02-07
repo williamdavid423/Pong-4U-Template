@@ -53,7 +53,8 @@ namespace Pong
         int player1Score = 0;
         int player2Score = 0;
         int gameWinScore = 2;  // number of points needed to win game
-
+        int ballXSpeed = 4;
+        int ballYSpeed = 4;
         
 
         #endregion
@@ -169,21 +170,31 @@ namespace Pong
             // TODO create code move ball either down or up based on ballMoveDown and using BALL_SPEED
 
             #endregion
-            
-            #region update paddle positions
+            ballX += BALL_SPEED;
+            ballY += BALL_SPEED;
 
+            //move player 1 
             if (aKeyDown == true && p1Y > 0)
             {
-                // TODO create code to move player 1 paddle up using p1.Y and PADDLE_SPEED
+                p1Y -= PADDLE_SPEED;
             }
 
-            // TODO create an if statement and code to move player 1 paddle down using p1.Y and PADDLE_SPEED
+            if (zKeyDown == true && p1Y < this.Height - pHeight)
+            {
+                p1Y += PADDLE_SPEED;
+            }
 
-            // TODO create an if statement and code to move player 2 paddle up using p2.Y and PADDLE_SPEED
+            //move player 2 
+            if (jKeyDown == true && p2Y > 0)
+            {
+                p2Y -= PADDLE_SPEED;
+            }
 
-            // TODO create an if statement and code to move player 2 paddle down using p2.Y and PADDLE_SPEED
+            if (mKeyDown == true && p2Y < this.Height - pHeight)
+            {
+                p2Y += PADDLE_SPEED;
+            }
 
-            #endregion
 
             #region ball collision with top and bottom lines
 
@@ -214,25 +225,10 @@ namespace Pong
 
             #endregion
 
-            #region ball collision with side walls (point scored)
-
-            if (ballX < 0)  // ball hits left wall logic
-            {
-                // TODO
-                // --- play score sound
-                // --- update player 2 score
-
-                // TODO use if statement to check to see if player 2 has won the game. If true run 
-                // GameOver method. Else change direction of ball and call SetParameters method.
-
-            }
-
-            // TODO same as above but this time check for collision with the right wall
-
-            #endregion
+            
             
             //refresh the screen, which causes the Form1_Paint method to run
-            this.Refresh();
+            Refresh();
         }
         
         /// <summary>
@@ -263,6 +259,7 @@ namespace Pong
             e.Graphics.FillRectangle(bluePaddle, paddle1);
             e.Graphics.FillRectangle(bluePaddle, paddle2);
             e.Graphics.FillRectangle(white, ball);
+         
 
 
             // TODO draw ball using FillRectangle
@@ -277,7 +274,6 @@ namespace Pong
             }
             
 
-            Refresh(); 
         }
 
     }
