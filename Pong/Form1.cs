@@ -55,7 +55,10 @@ namespace Pong
         int gameWinScore = 2;  // number of points needed to win game
         int ballXSpeed = 4;
         int ballYSpeed = 4;
-        
+
+        Rectangle paddle1 = new Rectangle(p1X, p1Y, pWidth, pHeight);
+        Rectangle paddle2 = new Rectangle(p2X, p2Y, pWidth, pHeight);
+        Rectangle ball = new Rectangle(ballX, ballY, bWidth, bHeight);
 
         #endregion
 
@@ -207,17 +210,63 @@ namespace Pong
             // If true use ballMoveDown down boolean to change direction
 
             #endregion
+            if (ballY < 0 || ballY > this.Height - bHeight)
+            {
+                ballYSpeed *= -1;  // or: ballYSpeed = -ballYSpeed; 
+            }
+
+            //create Rectangles of objects on screen to be used for collision detection 
+           
+
+            //check if ball hits either paddle. If it does change the direction 
+            //and place the ball in front of the paddle hit 
+            if (paddle1.IntersectsWith(ball))
+            {
+                ballXSpeed *= -1;
+                ballX = p1X + pWidth + 1;
+            }
+            else if (paddle2.IntersectsWith(ball))
+            {
+                ballXSpeed *= -1;
+                ballX = p2X - bWidth - 1;
+            }
+
+            //check if a player missed the ball and if true add 1 to score of other player  
+            if (ballX < 0)
+            {
+                player2Score++;
+
+                string drawString1 = $"{player2Score}";
+
+                ballX = this.Width / 2 - bWidth;
+                ballY = this.Height / 2 - bHeight;
+
+                p1Y = this.Height / 2 - pHeight / 2;
+                p2Y = this.Height / 2 - pHeight / 2;
+            }
+            else if (ballX > 600)
+            {
+                player1Score++;
+
+                string drawString2 = $"{player2Score}";
+
+                ballX = 295;
+                ballY = 195;
+
+                paddle1Y = 170;
+                paddle2Y = 170;
+            }
 
             #region ball collision with paddles
 
             // TODO create if statment that checks p1 collides with ball and if it does
-                 // --- play a "paddle hit" sound and
-                 // --- use ballMoveRight boolean to change direction
+            // --- play a "paddle hit" sound and
+            // --- use ballMoveRight boolean to change direction
 
             // TODO create if statment that checks p2 collides with ball and if it does
-                // --- play a "paddle hit" sound and
-                // --- use ballMoveRight boolean to change direction
-            
+            // --- play a "paddle hit" sound and
+            // --- use ballMoveRight boolean to change direction
+
             /*  ENRICHMENT
              *  Instead of using two if statments as noted above see if you can create one
              *  if statement with multiple conditions to play a sound and change direction
@@ -225,8 +274,8 @@ namespace Pong
 
             #endregion
 
-            
-            
+
+
             //refresh the screen, which causes the Form1_Paint method to run
             Refresh();
         }
@@ -253,9 +302,7 @@ namespace Pong
             // TODO draw paddles using FillRectangle
             SolidBrush bluePaddle = new SolidBrush(Color.Blue);
             SolidBrush white = new SolidBrush(Color.White);
-            Rectangle paddle1 = new Rectangle(p1X, p1Y, pWidth, pHeight);
-            Rectangle paddle2 = new Rectangle(p2X, p2Y, pWidth, pHeight);
-            Rectangle ball = new Rectangle(ballX, ballY, bWidth, bHeight);
+          
             e.Graphics.FillRectangle(bluePaddle, paddle1);
             e.Graphics.FillRectangle(bluePaddle, paddle2);
             e.Graphics.FillRectangle(white, ball);
