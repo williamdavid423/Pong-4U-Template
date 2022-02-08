@@ -21,6 +21,7 @@ using System.Media;
 
 namespace Pong
 {
+
     public partial class Form1 : Form
     {
         #region global values
@@ -42,7 +43,7 @@ namespace Pong
         //ball directions, speed, and rectangle
         Boolean ballMoveRight = true;
         Boolean ballMoveDown = true;
-        const int BALL_SPEED = 4;
+        int BALL_SPEED = 4;
         int ballX, ballY, ballSize;
 
         //paddle speeds and rectangles
@@ -55,10 +56,11 @@ namespace Pong
         int gameWinScore = 2;  // number of points needed to win game
         int ballXSpeed = 4;
         int ballYSpeed = 4;
+        
+ 
+  
 
-        Rectangle paddle1 = new Rectangle(p1X, p1Y, pWidth, pHeight);
-        Rectangle paddle2 = new Rectangle(p2X, p2Y, pWidth, pHeight);
-        Rectangle ball = new Rectangle(ballX, ballY, bWidth, bHeight);
+
 
         #endregion
 
@@ -166,6 +168,10 @@ namespace Pong
         /// </summary>
         private void gameUpdateLoop_Tick(object sender, EventArgs e)
         {
+            Rectangle paddle1 = new Rectangle(p1X, p1Y, pWidth, pHeight);
+            Rectangle paddle2 = new Rectangle(p2X, p2Y, pWidth, pHeight);
+            Rectangle ball = new Rectangle(ballX, ballY, bWidth, bHeight);
+
             #region update ball position
 
             // TODO create code to move ball either left or right based on ballMoveRight and using BALL_SPEED
@@ -173,8 +179,8 @@ namespace Pong
             // TODO create code move ball either down or up based on ballMoveDown and using BALL_SPEED
 
             #endregion
-            ballX += BALL_SPEED;
-            ballY += BALL_SPEED;
+            ballX += ballXSpeed;
+            ballY += ballYSpeed;
 
             //move player 1 
             if (aKeyDown == true && p1Y > 0)
@@ -244,17 +250,21 @@ namespace Pong
                 p1Y = this.Height / 2 - pHeight / 2;
                 p2Y = this.Height / 2 - pHeight / 2;
             }
-            else if (ballX > 600)
+            else if (ballX > 616)
             {
                 player1Score++;
 
-                string drawString2 = $"{player2Score}";
+                string drawString2 = $"{player1Score}";
 
-                ballX = 295;
-                ballY = 195;
+                ballX = (this.Width / 2) - bWidth;
+                ballY = (this.Height / 2) - bHeight;
 
-                paddle1Y = 170;
-                paddle2Y = 170;
+                p1Y = this.Height / 2 - pHeight / 2;
+                p2Y = this.Height / 2 - pHeight / 2;
+            }
+            if (ballY < 0 || ballY > this.Height - bHeight)
+            {
+                BALL_SPEED *= -BALL_SPEED;  // or: ballYSpeed = -ballYSpeed; 
             }
 
             #region ball collision with paddles
@@ -302,10 +312,11 @@ namespace Pong
             // TODO draw paddles using FillRectangle
             SolidBrush bluePaddle = new SolidBrush(Color.Blue);
             SolidBrush white = new SolidBrush(Color.White);
-          
-            e.Graphics.FillRectangle(bluePaddle, paddle1);
-            e.Graphics.FillRectangle(bluePaddle, paddle2);
-            e.Graphics.FillRectangle(white, ball);
+    
+
+            e.Graphics.FillRectangle(bluePaddle, p1X, p1Y, pWidth, pHeight);
+            e.Graphics.FillRectangle(bluePaddle, p2X, p2Y, pWidth, pHeight);
+            e.Graphics.FillRectangle(white, ballX, ballY, bWidth, bHeight);
          
 
 
